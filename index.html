@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TeamUp Campus helps students find teammates for college projects and hackathons.">
+  <title>TeamUp Campus | Build Together</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="#" class="logo">✦ TeamUp<span>Campus</span></a>
+    <nav>
+      <a href="#projects">Discover Projects</a>
+      <a href="#how">How It Works</a>
+      <button class="btn btn-primary" id="openForm">+ Post a Project</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">FOR STUDENTS, BY STUDENTS</span>
+        <h1>Find your people.<br><span>Build something great.</span></h1>
+        <p>Connect with talented students, discover exciting ideas,
+          and build projects that make a difference.</p>
+
+        <div class="search-box">
+          <span>⌕</span>
+          <input id="searchInput"
+            type="search"
+            placeholder="Search projects, skills or technologies...">
+          <button class="btn btn-primary" id="searchBtn">Search</button>
+        </div>
+
+        <div class="hero-note">🚀 Discover ideas · 🤝 Meet teammates · 💡 Build projects</div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="art-card art-main">
+          <span class="art-icon">👩‍💻</span>
+          <h3>Great ideas need great teams.</h3>
+          <p>Find your next collaborator.</p>
+        </div>
+        <div class="art-card art-small art-top">💡 &nbsp; New ideas</div>
+        <div class="art-card art-small art-bottom">🤝 &nbsp; Better together</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="projects">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">YOUR NEXT BIG IDEA</span>
+          <h2>Projects looking for teammates</h2>
+          <p>Find a project that matches your interests and skills.</p>
+        </div>
+        <span class="project-count" id="projectCount"></span>
+      </div>
+
+      <div class="toolbar">
+        <div class="filters" id="filters">
+          <button class="filter active" data-category="All">All Projects</button>
+          <button class="filter" data-category="Web Development">Web Development</button>
+          <button class="filter" data-category="AI/ML">AI / ML</button>
+          <button class="filter" data-category="Social Impact">Social Impact</button>
+        </div>
+        <select id="sortSelect" aria-label="Sort projects">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </div>
+
+      <div class="project-grid" id="projectGrid"></div>
+      <div class="empty-state" id="emptyState" hidden>
+        <h3>No projects found</h3>
+        <p>Try a different search or category.</p>
+      </div>
+    </section>
+
+    <section class="how-section" id="how">
+      <span class="eyebrow">SIMPLE AS THAT</span>
+      <h2>From idea to team in three steps</h2>
+      <div class="steps">
+        <article class="step">
+          <div class="step-icon">🔎</div>
+          <h3>01. Discover</h3>
+          <p>Explore student projects that match your interests and technical skills.</p>
+        </article>
+        <article class="step">
+          <div class="step-icon">🤝</div>
+          <h3>02. Connect</h3>
+          <p>Send a join request and let the project owner know you're interested.</p>
+        </article>
+        <article class="step">
+          <div class="step-icon">🚀</div>
+          <h3>03. Create</h3>
+          <p>Collaborate with your team and turn your idea into a real project.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="#" class="logo">✦ TeamUp<span>Campus</span></a>
+    <p>Made for students who want to build more together.</p>
+    <p class="footer-note">Student collaboration platform · Portfolio project</p>
+  </footer>
+
+  <dialog id="projectDialog">
+    <form id="projectForm">
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow">SHARE YOUR IDEA</span>
+          <h2>Post a project</h2>
+        </div>
+        <button type="button" class="close-btn" id="closeForm" aria-label="Close">✕</button>
+      </div>
+
+      <label for="title">Project name</label>
+      <input id="title" name="title" maxlength="80" required
+        placeholder="e.g. Smart Campus App">
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" maxlength="500"
+        required placeholder="What are you building?"></textarea>
+
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="Web Development">Web Development</option>
+        <option value="AI/ML">AI / ML</option>
+        <option value="Social Impact">Social Impact</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="skills">Skills needed (comma-separated)</label>
+      <input id="skills" name="skills" required
+        placeholder="React, JavaScript, UI/UX">
+
+      <label for="owner">Your name</label>
+      <input id="owner" name="owner" maxlength="60" required
+        placeholder="Project leader's name">
+
+      <label for="slots">Teammates needed</label>
+      <select id="slots" name="slots">
+        <option value="1">1 teammate</option>
+        <option value="2">2 teammates</option>
+        <option value="3">3 teammates</option>
+        <option value="4">4 teammates</option>
+        <option value="5">5 teammates</option>
+      </select>
+
+      <button class="btn btn-primary submit-btn" type="submit">Publish Project</button>
+      <p class="form-note">Demo version: projects are saved in this browser only.</p>
+    </form>
+  </dialog>
+
+  <dialog id="requestDialog">
+    <form id="requestForm">
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow">JOIN A TEAM</span>
+          <h2>Introduce yourself</h2>
+        </div>
+        <button type="button" class="close-btn" id="closeRequest" aria-label="Close">✕</button>
+      </div>
+      <p id="requestProjectName" class="request-project-name"></p>
+      <label for="studentName">Your name</label>
+      <input id="studentName" required maxlength="60" placeholder="Enter your name">
+      <label for="studentSkills">Your skills</label>
+      <input id="studentSkills" required placeholder="HTML, CSS, JavaScript">
+      <label for="studentMessage">Why do you want to join?</label>
+      <textarea id="studentMessage" required maxlength="300"
+        placeholder="Tell the project leader what you can contribute."></textarea>
+      <button class="btn btn-primary submit-btn" type="submit">Send Join Request</button>
+      <p class="form-note">Demo version: requests are saved in this browser only.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
