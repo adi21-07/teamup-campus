@@ -10,14 +10,67 @@
 </head>
 
   <body>
-  <header class="navbar">
-    <a href="#" class="logo">✦ TeamUp<span>Campus</span></a>
-    <nav>
-      <a href="#projects">Discover Projects</a>
-      <a href="#how">How It Works</a>
-      <button class="btn btn-primary" id="openForm">+ Post a Project</button>
-    </nav>
-  </header>
+  
+<header class="navbar">
+  <a href="#" class="logo">✦ TeamUp<span>Campus</span></a>
+  <nav>
+    <a href="#projects">Discover Projects</a>
+    <a href="#how">How It Works</a>
+    <button class="btn btn-outline" id="authOpen" type="button">Login / Sign Up</button>
+    <button class="btn btn-primary" id="openForm">+ Post a Project</button>
+    <span id="authUserArea" hidden>
+      <span id="authUserEmail"></span>
+      <button type="button" id="logoutButton" class="btn btn-outline">Logout</button>
+    </span>
+  </nav>
+</header>
+
+<dialog id="authDialog">
+  <div class="auth-content">
+    <h2 id="authHeading">Student Login</h2>
+    <p id="authStatus" role="status" aria-live="polite"></p>
+
+    <form id="signupForm" hidden>
+      <label for="signupName">Full Name</label>
+      <input id="signupName" name="full_name" type="text"
+        autocomplete="name" maxlength="100" required>
+
+      <label for="signupEmail">Email</label>
+      <input id="signupEmail" name="email" type="email"
+        autocomplete="email" required>
+
+      <label for="signupPassword">Password</label>
+      <input id="signupPassword" name="password" type="password"
+        autocomplete="new-password" minlength="8" required>
+
+      <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+
+    <form id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" name="email" type="email"
+        autocomplete="email" required>
+
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" name="password" type="password"
+        autocomplete="current-password" required>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <p>
+      <button type="button" id="showSignup" class="btn btn-outline">
+        Create new account
+      </button>
+      <button type="button" id="showLogin" class="btn btn-outline" hidden>
+        Back to Login
+      </button>
+    </p>
+
+    <button type="button" id="authClose" class="btn btn-outline">Close</button>
+  </div>
+</dialog>
+
 
   <main>
     <section class="hero">
