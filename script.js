@@ -1,4 +1,14 @@
 
+const SUPABASE_URL = "PASTE_PROJECT_URL_HERE";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_KEY_HERE";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log("TeamUp Campus: Supabase initialized!");
+
 const starterProjects = [
   {
     id: "p1",
