@@ -362,5 +362,21 @@ $("#requestForm").addEventListener("submit", (event) => {
   closeDialog($("#requestDialog"));
   showToast("Join request saved in this browser!");
 });
+async function testSupabaseConnection() {
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("id, title, status")
+    .limit(5);
 
+  if (error) {
+    console.error("Supabase connection test failed:", error);
+    showToast("Database test failed. Check the console.");
+    return;
+  }
+
+  console.log("Supabase connection successful!", data);
+  showToast("Supabase connection successful!");
+}
+
+testSupabaseConnection();
 renderProjects();
