@@ -378,5 +378,139 @@ async function testSupabaseConnection() {
   showToast("Supabase connection successful!");
 }
 
+
+function setAuthStatus(message, isError = false) {
+  const status = document.querySelector("#authStatus");
+  status.textContent = message;
+  status.style.color = isError ? "crimson" : "green";
+}
+
+function showAuthMode(mode) {
+  const isSignup = mode === "signup";
+
+  $("#authHeading").textContent = isSignup
+    ? "Create Student Account"
+    : "Student Login";
+
+  $("#signupForm").hidden = !isSignup;
+  $("#loginForm").hidden = isSignup;
+  $("#showSignup").hidden = isSignup;
+  $("#showLogin").hidden = !isSignup;
+
+  setAuthStatus("");
+}
+
+function updateAuthUI(user) {
+  $("#authOpen").hidden = Boolean(user);
+  $("#authUserArea").hidden = !user;
+  $("#authUserEmail").textContent = user ? user.email : "";
+}
+
+$("#authOpen").addEventListener("click", () => {
+  showAuthMode("login");
+  $("#authDialog").showModal();
+});
+
+$("#authClose").addEventListener("click", () => {
+  $("#authDialog").close();
+});
+
+$("#showSignup").addEventListener("click", () => {
+  showAuthMode("signup");
+});
+
+$("#showLogin").addEventListener("click", () => {
+  showAuthMode("login");
+});
+
+$("#signupForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const fullName = $("#signupName").value.trim();
+  const email = $("#signupEmail").value.trim();
+  const password = $("#signupPassword").value;
+
+  if (!fullName) {
+    setAuthStatus("Please enter your full name.", true);
+    return;
+  }
+
+  setAuthStatus("Creating your account...");
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: fullName }
+    }
+  });
+
+  if (error) {
+    setAuthStatus(error.message, true);
+    return;
+  }
+
+  if (data.session) {
+    setAuthStatus("Account created successfully!");
+  } else {
+    setAuthStatus(
+      "Account created. Check your email to confirm your account before logging in."
+    );
+  }
+});
+
+$("#loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = $("#loginEmail").value.trim();
+  const password = $("#loginPassword").value;
+
+  setAuthStatus("Logging in...");
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if (error) {
+    setAuthStatus(error.message, true);
+    return;
+  }
+
+  updateAuthUI(data.user);
+  $("#authDialog").close();
+  showToast("Login successful!");
+});
+
+$("#logoutButton").addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    showToast("Logout failed. Please try again.");
+    console.error("Logout error:", error);
+    return;
+  }
+
+  updateAuthUI(null);
+  showToast("Logged out successfully.");
+});
+
+async function initializeAuth() {
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+    console.error("Session error:", error);
+    return;
+  }
+
+  updateAuthUI(data.session?.user ?? null);
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    updateAuthUI(session?.user ?? null);
+  });
+}
+
+initializeAuth();
 testSupabaseConnection();
 renderProjects();
